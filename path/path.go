@@ -9,6 +9,10 @@ import (
 // through 3D space.
 type Path []vector.Vector3
 
+func (ls Path) Combine(path Path) Path {
+	return append(ls, path...)
+}
+
 func (ls Path) Rotate(pivot vector.Vector3, rot mesh.Quaternion) Path {
 	results := make([]vector.Vector3, len(ls))
 

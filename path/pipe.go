@@ -9,7 +9,7 @@ import (
 )
 
 // CreatePipe draws a pipe using the line segment as guides
-func (ls Path) CreatePipe(pipeThickness float64) (mesh.Model, error) {
+func (ls Path) CreatePipe(pipeThickness float64, sides int) (mesh.Model, error) {
 	if len(ls) < 2 {
 		return mesh.Model{}, errors.New("Unable to create a pipe with less than 2 points")
 	}
@@ -24,7 +24,7 @@ func (ls Path) CreatePipe(pipeThickness float64) (mesh.Model, error) {
 			dir = ls[i].Sub(ls[i-1])
 		}
 
-		points[i] = meshedpotatoes.GetPlaneOuterPoints(p, dir, pipeThickness, 12)
+		points[i] = meshedpotatoes.GetPlaneOuterPoints(p, dir, pipeThickness, sides)
 	}
 
 	polygons := make([]mesh.Polygon, 0)
@@ -44,7 +44,7 @@ func (ls Path) CreatePipe(pipeThickness float64) (mesh.Model, error) {
 }
 
 // CreatePipeWithVarryingThickness draws a pipe using the line segment as guides
-func (ls Path) CreatePipeWithVarryingThickness(thicknesses []float64) (mesh.Model, error) {
+func (ls Path) CreatePipeWithVarryingThickness(thicknesses []float64, sides int) (mesh.Model, error) {
 	if len(ls) < 2 {
 		return mesh.Model{}, errors.New("Unable to create a pipe with less than 2 points")
 	}
@@ -63,7 +63,7 @@ func (ls Path) CreatePipeWithVarryingThickness(thicknesses []float64) (mesh.Mode
 			dir = ls[i].Sub(ls[i-1])
 		}
 
-		points[i] = meshedpotatoes.GetPlaneOuterPoints(p, dir, thicknesses[i], 64)
+		points[i] = meshedpotatoes.GetPlaneOuterPoints(p, dir, thicknesses[i], sides)
 	}
 
 	polygons := make([]mesh.Polygon, 0)
